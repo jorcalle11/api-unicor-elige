@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body style="background-color:#f0f0f0;">
+  	<div class="container" style="padding-top:30px;padding-bottom:20px">
+			<div class="jumbotron" style="background-color:white;padding:15px;margin:25px;">
+			<div style="width:300px;margin:auto auto;padding-top:30px">
+				<center>
+					<a href="http://localhost:3000" target="_blank">
+				    <img alt="UnicorElige" width="200px" src="http://res.cloudinary.com/dgmr4poex/image/upload/v1442041343/uehlkgfib69ctlgnsqam.png">
+				  </a>
+				</center>
+			</div>
+			<h1>Hola {{name}}!</h1>
+			<br>
+			<p>Bienvenido a UnicorElige, en nuestra app podrás enterarte y mantenerte informado sobre los candidatos postulados para las elecciones de representante estudiantil en la universidad de Córdoba.</p>
+			<div>
+				<p>Tus credenciales de acceson son:</p>
+				<p><strong>Email: </strong> {{email}}</p>
+				<p><strong>Contraseña: </strong> {{password}}</p>
+			</div>
+				<p>Ingresa a la aplicación <a href="http://localhost:3000" target="_blank">http://jomaca.noip.me/api</a></p>
+			</div>
+  	</div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</html>
+
