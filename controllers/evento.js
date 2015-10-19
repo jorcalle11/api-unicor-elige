@@ -59,7 +59,7 @@ exports.updateEvent = function(req,res){
   editEvent.end = req.body.end || editEvent.end;
   editEvent.place = req.body.place || editEvent.place;
   editEvent.save();
-  res.json(saved);
+  res.json(editEvent);
 };
 
 exports.getEvent = function(req,res){

@@ -34,7 +34,7 @@ exports.postCandidate = function(req,res){
 
 exports.createPost = function(req,res){
 	var post = new Post(req.body);
-	post.image.url = 'http://res.cloudinary.com/dgmr4poex/image/upload/v1443927986/post_oopnle.png';
+	post.image.url = 'http://res.cloudinary.com/dgmr4poex/image/upload/v1445221842/20150409024722214032_zhcwgm.jpg';
 
   async.waterfall([
 		function searchCandidate(callback){
