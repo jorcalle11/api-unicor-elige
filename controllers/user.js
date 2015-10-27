@@ -72,7 +72,7 @@ exports.updateUser = function(req,res){
       cloudinary.uploader.upload(req.file.path,function(result){
         user.image.url = result.url;
         user.image.public_id = result.public_id;
-        user.save();
+        user.save()
         res.send(user);
       },{
         width: 400,
@@ -143,8 +143,8 @@ exports.resetPassword = function(req,res){
 
 exports.changePassword = function(req,res){
   var user = req.userTemp;
-  if(user.validPassword(req.body.currentPassword, req.userTemp.password)){
-    user.password = req.body.newPassword;
+  if(user.validPassword(req.body.current, req.userTemp.password)){
+    user.password = req.body.new;
     user.save(function(err,saved){
       if (err) return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

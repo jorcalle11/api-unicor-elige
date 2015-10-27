@@ -5,6 +5,7 @@ var Post = require('../models/post');
 var errorHandler = require('../middlewares/error');
 var async = require('async');
 var _ = require('lodash');
+var cloudinary = require('cloudinary');
 
 exports.allCandidates = function(req,res){
   Candidato.find().populate('user').exec(function(err,candidates){
@@ -58,15 +59,36 @@ exports.getCandidate = function(req,res){
 
 exports.removeCandidate = function(req,res){
   var candidate = req.candidato;
-  candidate.remove(function(err){
-    if (err) return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
-    });
-    Evento.remove({'candidate':req.candidato._id});
-    Post.remove({'candidate':req.candidato._id});
-
-    _updateRole(candidate.user.identification.number,'estudiante');
-    res.json(candidate);
+  async.waterfall([
+    function deleteCandidate(callback){
+      candidate.remove(function(err,result){
+        if (err) callback({message: errorHandler.getErrorMessage(err)});
+        _updateRole(candidate.user.identification.number,'estudiante');
+        callback(null,result);
+      })
+    },
+    function deleteEvents(result, callback){
+      Evento.remove({'candidate':candidate._id}, function(err, result){
+        if (err) callback({message: errorHandler.getErrorMessage(err)});
+        callback(null,result);
+      });
+    },
+    function deletePosts(result, callback){
+      Post.find({'candidate':candidate._id},function(err,posts){
+        if (err) callback({message: errorHandler.getErrorMessage(err)});
+        if (posts.length) {
+          posts.map(function(post){
+            if (post.image.public_id) {
+              cloudinary.uploader.destroy(post.image.public_id)
+            };
+          })
+        };
+        callback(null, result)
+      })
+    }
+  ],function (err, result){
+    if(err) return res.status(400).send(err);
+    return res.status(200).json(candidate);
   });
 };
 

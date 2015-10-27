@@ -103,9 +103,9 @@ exports.addComment = function(req,res){
 
 exports.removePost = function(req,res){
 	var post = req.post;
-	if (post.image.public_id){
+	if (post.image.public_id) {
 		cloudinary.uploader.destroy(post.image.public_id)
-	}
+	};
 	post.remove();
 	res.json(post);
 };

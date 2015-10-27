@@ -5,9 +5,12 @@ var errorHandler = require('../middlewares/error');
 
 exports.allEvents = function(req,res){
   Evento.find().populate('user').exec(function(err,events){
-    events.map(function(element){
-      element.user.password = undefined;
-    });
+    if (events.length) {
+      events.map(function(element){
+        element.user.password = undefined;
+      });
+    };
+
     if (err) return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     })
