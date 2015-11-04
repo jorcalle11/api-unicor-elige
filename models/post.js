@@ -43,13 +43,13 @@ var postSchema = new Schema({
   		default:'',
   		trim: true
   	},
-  	author: {
-  		name: {
-  			type :String
-  		},
-  		image : {
-  			type : String
-  		}
+    author: {
+    	name: {
+    		type: String
+    	},
+    	image: {
+    		type: String
+    	}
   	}
   }]
 });

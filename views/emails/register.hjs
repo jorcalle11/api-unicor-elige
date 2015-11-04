@@ -21,7 +21,7 @@
 				<p><strong>Email: </strong> {{email}}</p>
 				<p><strong>Contraseña: </strong> {{password}}</p>
 			</div>
-				<p>Ingresa a la aplicación <a href="http://localhost:3000" target="_blank">http://jomaca.noip.me/api</a></p>
+				<p>Ingresa a la aplicación <a href="http://unicorelige.noip.me/#/login" target="_blank">http://unicorelige.noip.me/#/login</a></p>
 			</div>
   	</div>
   </body>

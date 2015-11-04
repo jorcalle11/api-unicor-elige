@@ -34,6 +34,39 @@ var candidatoSchema = new Schema({
       default: Date.now
     }
   }],
+  facebook:{
+    id:{
+      type: String
+    },
+    username: {
+      type: String
+    },
+    photo: {
+      type: String
+    }
+  },
+  twitter:{
+    id:{
+      type: String
+    },
+    username: {
+      type: String
+    },
+    photo: {
+      type: String
+    }
+  },
+  instagram:{
+    id:{
+      type: String
+    },
+    username: {
+      type: String
+    },
+    photo: {
+      type: String
+    }
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

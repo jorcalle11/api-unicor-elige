@@ -4,7 +4,6 @@ var Evento = require('../models/evento');
 var Post = require('../models/post');
 var errorHandler = require('../middlewares/error');
 var async = require('async');
-var _ = require('lodash');
 var cloudinary = require('cloudinary');
 
 exports.allCandidates = function(req,res){
@@ -81,6 +80,7 @@ exports.removeCandidate = function(req,res){
             if (post.image.public_id) {
               cloudinary.uploader.destroy(post.image.public_id)
             };
+            post.remove();
           })
         };
         callback(null, result)
@@ -100,12 +100,25 @@ exports.profile = function(req,res){
     candidate.user.password = undefined;
     res.status(200).json(candidate);
   })
-}
+};
 
 exports.updateProfile = function(req,res){
   var putCandidate = req.candidato;
   putCandidate.watchword = req.body.watchword || putCandidate.watchword;
   putCandidate.biography = req.body.biography || putCandidate.watchword;
+  if (req.body.provider == 'facebook') {
+    putCandidate.facebook.id = undefined;
+    putCandidate.facebook.username = undefined;
+    putCandidate.facebook.photo = undefined;
+  } else if(req.body.provider =='twitter') {
+    putCandidate.twitter.id = undefined;
+    putCandidate.twitter.username = undefined;
+    putCandidate.twitter.photo = undefined;
+  } else {
+    putCandidate.instagram.id = undefined;
+    putCandidate.instagram.username = undefined;
+    putCandidate.instagram.photo = undefined;
+  }
   putCandidate.save();
   res.json(putCandidate);
 };

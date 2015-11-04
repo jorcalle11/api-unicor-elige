@@ -5,13 +5,13 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var routes = require('./routes/index');
+var auth = require('./routes/auth');
 var users = require('./routes/user');
 var admin = require('./routes/admin');
 var candidate = require('./routes/candidato');
 var events = require('./routes/evento');
 var proposals = require('./routes/propuesta');
 var posts = require('./routes/post');
-
 var app = express();
 
 // view engine setup
@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+app.use('/', auth);
 app.use('/api', routes);
 app.use('/admin',admin);
 app.use('/users', users);

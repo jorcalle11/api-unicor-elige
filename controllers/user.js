@@ -1,28 +1,10 @@
-var Admin = require('../models/admin');
 var User = require('../models/user');
 var Candidato = require('../models/candidato');
-var service = require('../middlewares/token');
 var errorHandler = require('../middlewares/error');
-var async = require('async');
 var cloudinary = require('../config/cloudinary');
 var nodemailer = require('../config/nodemailer');
 var password = require('../middlewares/password');
 var public_id = 'user_dez4rt';
-
-exports.login = function(req,res){
-  if(!req.body.email) return res.status(400).send({
-    message : 'Error al iniciar Sesión, intentalo nuevamente'
-  });
-  User.findOne({'email':req.body.email.toLowerCase()},function(err,user){
-    if(user)
-      if(user.validPassword(req.body.password))
-        res.status(200).json({'token':service.createToken(user)});
-        else
-        res.status(400).send({message:'Contraseña Incorrecta'});
-    else
-      _searchAdmin(req,res);
-  });
-};
 
 exports.allUsers = function(req,res){
   User.find(function(err,user){
@@ -36,8 +18,8 @@ exports.allUsers = function(req,res){
 exports.createUser = function(req,res){
   var user = new User(req.body);
   user.displayName = user.firstName +' '+ user.lastName;
-  user.password = password.generatePassword();
-  //user.password = 'jomaca11';
+  //user.password = password.generatePassword();
+  user.password = 'jomaca11';
   var passwordTemp = user.password;
   user.image.url = 'http://res.cloudinary.com/dgmr4poex/image/upload/v1443021374/user_dez4rt.png';
   user.image.public_id = 'user_dez4rt';
@@ -46,7 +28,7 @@ exports.createUser = function(req,res){
     if (err) return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });
-    nodemailer.registerMail({name: user.displayName, email: user.email, password: passwordTemp});
+    //nodemailer.registerMail({name: user.displayName, email: user.email, password: passwordTemp});
     res.status(201).json(user);
   });
 };
@@ -167,14 +149,4 @@ exports.userByID = function(req, res, next, id) {
   });
 };
 
-function _searchAdmin(req, res){
-  Admin.findOne({'email':req.body.email.toLowerCase()},function(err,admin){
-    if(admin)
-      if(admin.validPassword(req.body.password))
-        res.status(200).json({'token':service.createToken(admin)});
-        else
-        res.status(400).send({message:'Contraseña Incorrecta'});
-    else
-      res.status(400).send({message: 'Error, usuario no encontrado!'});
-  });
-}
+
