@@ -12,6 +12,7 @@ var candidate = require('./routes/candidato');
 var events = require('./routes/evento');
 var proposals = require('./routes/propuesta');
 var posts = require('./routes/post');
+var comentario = require('./routes/comentario');
 var app = express();
 
 // view engine setup
@@ -34,6 +35,7 @@ app.use('/candidates',candidate);
 app.use('/events',events);
 app.use('/proposals', proposals);
 app.use('/posts',posts);
+app.use('/comments',comentario);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

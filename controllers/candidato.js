@@ -105,7 +105,7 @@ exports.profile = function(req,res){
 exports.updateProfile = function(req,res){
   var putCandidate = req.candidato;
   putCandidate.watchword = req.body.watchword || putCandidate.watchword;
-  putCandidate.biography = req.body.biography || putCandidate.watchword;
+  putCandidate.biography = req.body.biography || putCandidate.biography;
   if (req.body.provider == 'facebook') {
     putCandidate.facebook.id = undefined;
     putCandidate.facebook.username = undefined;

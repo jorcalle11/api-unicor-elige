@@ -6,31 +6,24 @@ var commentSchema = new	Schema({
     type: Schema.ObjectId,
     ref: 'Post'
   },
-  postCandidate: {
-    type: Schema.ObjectId,
-    ref: 'Candidato'
-  },
-  postCandidateUser:{
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
-  comment:[{
-    created:{
-  		type: Date,
-  		default: Date.now
-  	},
-  	content:{
-  		type: String,
-  		default:'',
-  		trim: true
-  	},
-  	user:{
-  		type: Schema.ObjectId,
-  		ref: 'User'
-  	}
-  }]
+  created:{
+		type: Date,
+		default: Date.now
+	},
+	edited:{
+		type: Date
+	},
+	content:{
+		type: String,
+		default:'',
+		trim: true
+	},
+	user:{
+		type: Schema.ObjectId,
+		ref: 'User'
+	}
 });
 
-var Post = mongoose.model('Post', postSchema);
+var Comentario = mongoose.model('Comentario', commentSchema);
 
-module.exports = Post;
+module.exports = Comentario;

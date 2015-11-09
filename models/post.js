@@ -32,26 +32,7 @@ var postSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
-  },
-  comments:[{
-    created:{
-  		type: Date,
-  		default: Date.now
-  	},
-  	content:{
-  		type: String,
-  		default:'',
-  		trim: true
-  	},
-    author: {
-    	name: {
-    		type: String
-    	},
-    	image: {
-    		type: String
-    	}
-  	}
-  }]
+  }
 });
 
 var Post = mongoose.model('Post', postSchema);
