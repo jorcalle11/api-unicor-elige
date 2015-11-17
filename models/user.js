@@ -83,6 +83,10 @@ var userSchema = new Schema({
     public_id:{
       type: String
     }
+  },
+  votation: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -103,6 +107,7 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.plugin(uniqueValidator,{ message: 'Error, {VALUE} ya esta en uso.' });
+
 var User = mongoose.model('User',userSchema);
 
 module.exports = User;

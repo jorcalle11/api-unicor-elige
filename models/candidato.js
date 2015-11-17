@@ -70,6 +70,10 @@ var candidatoSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  popularity:{
+    type: Number,
+    default: 0
   }
 });
 

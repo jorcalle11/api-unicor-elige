@@ -25,6 +25,7 @@ exports.createComment = function(req,res){
 
 		comment.save(function(err,commentSaved){
 			if (err) return res.status(400).send(err);
+		  Post.update({'_id':post._id},{ '$inc': {'numComments': 1}});
 			res.json(commentSaved.populate('user','displayName image'));
 		});
 	})
@@ -58,8 +59,10 @@ exports.editComment = function(req,res){
 
 exports.removeComment = function(req,res){
 	var comment = req.comment;
+
 	Comentario.remove(req.comment,function(err, commentRemoved){
 		if (err) return res.status(400).send(err);
+		Post.update({'_id':comment.post},{$inc:{'numComments':-1}});
 		res.json(comment);
 	});
 }

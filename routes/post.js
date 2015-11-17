@@ -12,7 +12,6 @@ router.post('/new', auth.ensureAuthenticated, auth.Authorization('candidato'), u
 router.get('/:postById', auth.ensureAuthenticated, controller.getPost);
 router.get('/candidates/:candidateId', auth.ensureAuthenticated, controller.postCandidate);
 router.put('/:postById', auth.ensureAuthenticated, auth.Authorization('candidato'), controller.updatePost);
-router.put('/newComment/:postById', auth.ensureAuthenticated, controller.addComment);
 router.delete('/:postById', auth.ensureAuthenticated, auth.Authorization('candidato'), controller.removePost);
 
 router.param('postById', controller.postByID)

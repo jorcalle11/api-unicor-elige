@@ -7,6 +7,7 @@ module.exports.createToken = function(user){
     sub: user._id,
     email: user.email,
     image: user.image,
+    votation: user.votation,
     iat: moment().unix(),
     exp: moment().add(2, "days").unix()
   };

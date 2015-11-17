@@ -17,6 +17,10 @@ var postSchema = new Schema({
 		default:'',
 		trim: true
 	},
+	numComments: {
+		type: Number,
+		default: 0
+	},
 	image:{
 		url:{
 			type: String

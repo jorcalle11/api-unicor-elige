@@ -7,11 +7,11 @@ var password = require('../middlewares/password');
 var public_id = 'user_dez4rt';
 
 exports.allUsers = function(req,res){
-  User.find(function(err,user){
+  User.find({},function(err, users){
     if(err) return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
     });
-    res.status(200).json(user);
+    res.status(200).json(users);
   });
 };
 
@@ -38,14 +38,18 @@ exports.getUser = function(req,res){
 };
 
 exports.updateUser = function(req,res){
-
-  User.findById(req.params.userID).select('displayName image').exec(function(err,user){
+  User.findById(req.params.userID).select('displayName image votation').exec(function(err,user){
     if (err) return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });
     if (!user) return res.send({message:'Usuario no encontrado!'});
 
     user.displayName = req.body.displayName || user.displayName;
+
+    if (req.body.votation) {
+      user.votation = req.body.votation;
+      Candidato.update({'_id':req.body.candidate},{'$inc':{'popularity':1}});
+    };
 
     if (req.file){
       if (user.image.public_id != public_id) {
@@ -86,6 +90,8 @@ exports.me = function(req,res){
     if (err) return res.status(400).send({
       message: errorHandler.getErrorMessage(err)
     });
+      user.password = undefined;
+      user.roles = [];
     res.json(user);
   })
 };

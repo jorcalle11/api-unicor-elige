@@ -1,5 +1,6 @@
 var Candidato = require('../models/candidato');
 var Post = require('../models/post');
+var Comentario = require('../models/comentario');
 var errorHandler = require('../middlewares/error');
 var _ = require('lodash');
 var async = require('async');
@@ -86,27 +87,19 @@ exports.updatePost = function(req,res){
 	});
 }
 
-exports.addComment = function(req,res){
-	var comment = {
-		content : req.body.content,
-		created: Date.now(),
-		author:{
-			name: req.user.displayName,
-			image: req.user.image.url
-		}
-	};
-
-  Post.update({'_id':req.post._id},{ '$push': {'comments': comment}}, function(err, ok){
-    res.json(comment);
-  });
-};
-
 exports.removePost = function(req,res){
 	var post = req.post;
 	if (post.image.public_id) {
 		cloudinary.uploader.destroy(post.image.public_id)
 	};
 	post.remove();
+	Comentario.find({'post':post._id},function(err,comments){
+		if (comments.length) {
+			comments.map(function(comment){
+				comment.remove();
+			})
+		};
+	});
 	res.json(post);
 };
 
